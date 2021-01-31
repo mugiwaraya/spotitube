@@ -11,7 +11,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
+@ApplicationPath("")
 @Path("/login")
 public class AuthService {
 
@@ -39,8 +39,4 @@ public class AuthService {
         }
         return Response.status(401).build();
     }
-
-
-
-
 }

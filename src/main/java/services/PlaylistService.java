@@ -37,9 +37,5 @@ public class PlaylistService {
 //        }
 //        return Response.status(201).entity(new GetAllPlaylistsResponseDTO(playlists, length)).build();
         return null;
-    }
-
-
-
-
+    } 
 }
