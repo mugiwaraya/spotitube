@@ -30,7 +30,7 @@ public class AuthTokenDAO implements IAuthToken {
     }
 
     @Override
-    public User checkToken(String token) throws NotAuthorizedException {
+    public User getUserByToken(String token) throws NotAuthorizedException {
         User user = null;
         String query = "SELECT id, name FROM users where token = ?";
 

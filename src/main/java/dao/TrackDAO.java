@@ -15,9 +15,9 @@ public class TrackDAO implements ITrack {
 
     @Override
     public List<Track> getTracksInPlaylist(int playlistId) {
-        List<Track> tracks = new ArrayList<>();
+        List<Track> tracks = new ArrayList<Track>();
         String query = "SELECT t.*, tp.offlineAvailable FROM tracks t INNER JOIN tracksinplaylist tp ON t.id = tip.trackId WHERE tip.playlistId = " + playlistId;
-        return null;
+        return tracks;
     }
 
     @Override
@@ -27,7 +27,6 @@ public class TrackDAO implements ITrack {
 
     @Override
     public void addTrackToPlaylist(int playlistId, int trackId, boolean offlineAvailable) {
-
     }
 
     @Override

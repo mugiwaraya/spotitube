@@ -31,7 +31,6 @@ public class AuthService {
 
     private Response authorize(AuthRequestDTO requestDTO) {
         User user = userDAO.login(requestDTO.getUsername(), requestDTO.getPassword());
-
         if (user != null) {
             String token = tokenDAO.generateToken();
             tokenDAO.insertToken(user, token);

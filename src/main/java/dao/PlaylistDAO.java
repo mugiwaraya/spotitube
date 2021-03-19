@@ -1,13 +1,11 @@
 package dao;
 
 import domain.Playlist;
+import domain.Track;
 import interfaces.IPlaylist;
 
 import javax.inject.Inject;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -75,19 +73,28 @@ public class PlaylistDAO implements IPlaylist {
     }
 
     @Override
-    public boolean addPlaylist(Playlist playlist) {
-        String query = "INSERT INTO playlists (name, owner)\n" +
+    public Playlist addPlaylist(Playlist playlist) {
+        String query = "INSERT INTO playlists (name, ownerId)\n" +
                 "VALUES (?, ?)";
         try {
-            PreparedStatement stm = conn.prepareStatement(query);
+            PreparedStatement stm = conn.prepareStatement(query,  Statement.RETURN_GENERATED_KEYS);
             stm.setString(1, playlist.getName());
             stm.setInt(2, playlist.getOwnerId());
             stm.executeUpdate();
+            try (ResultSet generatedKeys = stm.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    playlist.setId(generatedKeys.getInt(1));
+                }
+                else {
+                    throw new SQLException("Creating playlist failed, no ID obtained.");
+                }
+            }
             stm.close();
-            return true;
+
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Something went wrong with adding a playlist to the DB: " + e);
-            return false;
+            return null;
         }
+        return playlist;
     }
 }

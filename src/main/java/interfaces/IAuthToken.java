@@ -7,7 +7,7 @@ import java.util.UUID;
 public interface IAuthToken {
     String generateToken();
 
-    User checkToken(String token);
+    User getUserByToken(String token);
 
     boolean insertToken(User user, String token);
 }

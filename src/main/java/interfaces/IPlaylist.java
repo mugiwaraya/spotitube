@@ -8,5 +8,5 @@ public interface IPlaylist {
     List<Playlist> getAllPlaylists(int userId);
     Playlist getPlaylist (int playlistId);
     boolean deletePlaylist(int playlistId);
-    boolean addPlaylist (Playlist playlist);
+    Playlist addPlaylist (Playlist playlist);
 }
