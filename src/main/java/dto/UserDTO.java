@@ -1,6 +1,6 @@
-package domain;
+package dto;
 
-public class User {
+public class UserDTO {
     private int id;
     private String name;
     private String username;
@@ -8,7 +8,7 @@ public class User {
     private String token;
 
 
-    public User(int id, String username, String name, String email, String token) {
+    public UserDTO(int id, String username, String name, String email, String token) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -16,7 +16,7 @@ public class User {
         this.token = this.token != null ? this.token = token : "";
     }
 
-    public User(int id, String name) {
+    public UserDTO(int id, String name) {
         this.id = id;
         this.name = name;
     }

@@ -1,8 +1,8 @@
 package services;
 
-import domain.User;
-import dto.auth.AuthRequestDTO;
-import dto.auth.AuthResponseDTO;
+import dto.UserDTO;
+import dto.AuthRequestDTO;
+import dto.AuthResponseDTO;
 import interfaces.IAuthToken;
 import interfaces.IUser;
 
@@ -30,11 +30,11 @@ public class AuthService {
     }
 
     private Response authorize(AuthRequestDTO requestDTO) {
-        User user = userDAO.login(requestDTO.getUsername(), requestDTO.getPassword());
-        if (user != null) {
+        UserDTO userDTO = userDAO.login(requestDTO.getUsername(), requestDTO.getPassword());
+        if (userDTO != null) {
             String token = tokenDAO.generateToken();
-            tokenDAO.insertToken(user, token);
-            return Response.status(201).entity(new AuthResponseDTO(user.getName(), token)).build();
+            tokenDAO.insertToken(userDTO, token);
+            return Response.status(201).entity(new AuthResponseDTO(userDTO.getName(), token)).build();
         }
         return Response.status(401).build();
     }

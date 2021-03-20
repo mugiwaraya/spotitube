@@ -1,13 +1,15 @@
 package interfaces;
 
-import domain.Track;
-
-import java.util.List;
+import dto.TrackDTO;
+import dto.TracksDTO;
+import exceptions.DeleteException;
+import exceptions.InsertionException;
+import exceptions.TrackException;
 
 public interface ITrack {
-    boolean exists(int trackId);
-    List<Track> getTracksInPlaylist(int playlistId);
-    List<Track> getTracksNotInPlaylist(int playlistId);
-    void addTrackToPlaylist(int playlistId, int trackId, boolean offlineAvailable);
-    void deleteTrackFromPlaylist(int playlistId, int trackId);
+
+    TracksDTO getTracksInPlaylist(int playlistId) throws TrackException, TrackException;
+    TracksDTO getAllTracksNotInPlaylist(int playlistId) throws TrackException;
+    void removeTrackFromPlaylist(int playlistId, int trackId) throws DeleteException;
+    void addTrackToPlaylist(int playlistId, TrackDTO dto) throws InsertionException;
 }

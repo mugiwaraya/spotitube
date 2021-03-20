@@ -1,12 +1,12 @@
 package interfaces;
 
-import domain.Playlist;
-
-import java.util.List;
+import dto.AddPlayListDTO;
+import dto.PlaylistDTO;
+import dto.PlaylistsDTO;
 
 public interface IPlaylist {
-    List<Playlist> getAllPlaylists(int userId);
-    Playlist getPlaylist (int playlistId);
+    PlaylistsDTO getAllPlaylists(int userId);
     boolean deletePlaylist(int playlistId);
-    Playlist addPlaylist (Playlist playlist);
+    AddPlayListDTO addPlaylist (AddPlayListDTO playlist);
+    PlaylistDTO editPlaylist(PlaylistDTO playlist, int playlistId);
 }

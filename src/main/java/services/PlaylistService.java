@@ -1,12 +1,8 @@
 package services;
 
-import domain.Playlist;
-import domain.Track;
-import domain.User;
-import dto.playlist.AddPlaylistRequestDTO;
-import dto.playlist.AddPlaylistResponseDTO;
-import dto.playlist.GetAllPlaylistsResponseDTO;
-import dto.playlist.GetTracksInPlaylistDTO;
+import dto.*;
+
+import exceptions.InsertionException;
 import interfaces.IAuthToken;
 import interfaces.IPlaylist;
 import interfaces.ITrack;
@@ -17,7 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
 
 @Path("playlists")
 public class PlaylistService {
@@ -38,33 +34,43 @@ public class PlaylistService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllPlaylists(@QueryParam("token") String token) {
-		User user = authDAO.getUserByToken(token);
-		ArrayList<Playlist> playlists = (ArrayList<Playlist>) playlistDAO.getAllPlaylists(user.getId());
-		for (Playlist playlist : playlists) {
-			playlist.setTracks((ArrayList<Track>) trackDAO.getTracksInPlaylist(playlist.getId()));
-		}
-		GetAllPlaylistsResponseDTO result = new GetAllPlaylistsResponseDTO(playlists);
-		return Response.ok().entity(result).build();
+		UserDTO userDTO = authDAO.getUserByToken(token);
+		PlaylistsDTO response = playlistDAO.getAllPlaylists(userDTO.getId());
+		return Response.ok().entity(response).build();
 	}
 
+	@GET
+	@Path("/{id}/tracks")
+	@Produces("application/json")
+	public Response getAllTracksInPlaylist(@PathParam("id") int playlistId, @QueryParam("token") String token) {
+		try {
+			UserDTO userDTO = authDAO.getUserByToken(token);
+			if (userDTO == null) {
+				return Response.status(403).build();
+			}
+			TracksDTO response = trackDAO.getTracksInPlaylist(playlistId);
+			if (response.getTracks() != null) {
+				return Response.ok().entity(response).build();
+			}
+			return Response.ok().entity(new ArrayList<TrackDTO>()).build();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(400).build();
+		}
+	}
 
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Response addPlaylist(AddPlaylistRequestDTO dto, @QueryParam("token") String token) {
+	public Response addPlaylist(PlaylistDTO dto, @QueryParam("token") String token) {
 		try {
-			User user = authDAO.getUserByToken(token);
-			if (user == null) {
+			UserDTO userDTO = authDAO.getUserByToken(token);
+			if (userDTO == null) {
 				return Response.status(403).build();
 			}
-			Playlist playList = new Playlist(0, dto.getName(), user.getId());
-			playlistDAO.addPlaylist(playList);
-			List<Playlist> userPlaylists = playlistDAO.getAllPlaylists(user.getId());
-			int length = 0;
-			for (Playlist pl : userPlaylists) {
-				length += pl.getLength();
-			}
-			AddPlaylistResponseDTO response = new AddPlaylistResponseDTO(userPlaylists, length);
+			AddPlayListDTO playlist = new AddPlayListDTO(dto.getId(), dto.getName(), userDTO.getId(), Collections.emptyList());
+			playlistDAO.addPlaylist(playlist);
+			PlaylistsDTO response = playlistDAO.getAllPlaylists(userDTO.getId());
 			return Response.ok().entity(response).build();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,32 +84,52 @@ public class PlaylistService {
 	@Path("/{id}")
 	public Response deletePlaylist(@PathParam("id") int playlistId, @QueryParam("token") String token) {
 		try {
-			User user = authDAO.getUserByToken(token);
-			if (user == null) {
+			UserDTO userDTO = authDAO.getUserByToken(token);
+			if (userDTO == null) {
 				return Response.status(403).build();
 			}
 			playlistDAO.deletePlaylist(playlistId);
-			GetAllPlaylistsResponseDTO result = new GetAllPlaylistsResponseDTO(playlistDAO.getAllPlaylists(authDAO.getUserByToken(token).getId()));
-			return Response.ok().entity(result).build();
+			PlaylistsDTO response = playlistDAO.getAllPlaylists(userDTO.getId());
+			return Response.ok().entity(response).build();
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(401).build();
 		}
 	}
 
-	@GET
-	@Path("/{id}/tracks")
+	@PUT
+	@Consumes("application/json")
 	@Produces("application/json")
-	public Response getAllTracksInPlaylist(@PathParam("id") int playlistId, @QueryParam("token") String token) {
+	@Path("/{id}")
+	public Response editPlaylist(PlaylistDTO playlist, @QueryParam("token") String token, @PathParam("id") int playlistId) {
 		try {
-			User user = authDAO.getUserByToken(token);
-			if (user == null) {
+			UserDTO userDTO = authDAO.getUserByToken(token);
+			if (userDTO == null) {
 				return Response.status(403).build();
 			}
-			GetTracksInPlaylistDTO result = new GetTracksInPlaylistDTO(trackDAO.getTracksInPlaylist(playlistId));
-			return Response.ok().entity(result).build();
+			playlistDAO.editPlaylist(playlist, playlistId);
+			PlaylistsDTO response = playlistDAO.getAllPlaylists(userDTO.getId());
+			return Response.ok().entity(response).build();
 		} catch (Exception e) {
 			e.printStackTrace();
+			return Response.status(401).build();
+		}
+	}
+
+	@POST
+	@Consumes("application/json")
+	@Produces("application/json")
+	@Path("/{id}/tracks")
+	public Response addTrackToPlaylist(@QueryParam("token") String token, @PathParam("id") int playlistId, TrackDTO dto) {
+		try {
+			UserDTO userDTO = authDAO.getUserByToken(token);
+			if (userDTO == null) {
+				return Response.status(403).build();
+			}
+			trackDAO.addTrackToPlaylist(playlistId, dto);
+			TracksDTO response = trackDAO.getTracksInPlaylist(playlistId);
+			return Response.ok().entity(response).build();
+		} catch (Exception | InsertionException e) {
 			return Response.status(400).build();
 		}
 	}

@@ -1,13 +1,11 @@
 package interfaces;
 
-import domain.User;
-
-import java.util.UUID;
+import dto.UserDTO;
 
 public interface IAuthToken {
     String generateToken();
 
-    User getUserByToken(String token);
+    UserDTO getUserByToken(String token);
 
-    boolean insertToken(User user, String token);
+    boolean insertToken(UserDTO userDTO, String token);
 }
