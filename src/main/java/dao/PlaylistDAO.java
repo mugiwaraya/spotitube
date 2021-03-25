@@ -3,7 +3,8 @@ package dao;
 import dto.AddPlayListDTO;
 import dto.Playlist;
 import dto.Playlists;
-import interfaces.IPlaylist;
+import interfaces.IDatabaseConnection;
+import interfaces.IPlaylistDAO;
 
 import javax.inject.Inject;
 import java.sql.*;
@@ -12,13 +13,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PlaylistDAO implements IPlaylist {
+public class PlaylistDAO implements IPlaylistDAO {
 
 	private Connection conn;
 	private final static Logger LOGGER = Logger.getLogger(PlaylistDAO.class.getName());
 
 	@Inject
-	public PlaylistDAO(DatabaseConnection databaseConnection) {
+	public PlaylistDAO(IDatabaseConnection databaseConnection) throws Exception {
 		this.conn = databaseConnection.getConnection();
 	}
 
@@ -102,8 +103,7 @@ public class PlaylistDAO implements IPlaylist {
 			stm.setInt(2, playlist.getId());
 			stm.executeUpdate();
 			stm.close();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			LOGGER.log(Level.SEVERE, "Something went wrong with updating the playlist in the DB: " + e);
 			return null;
 		}

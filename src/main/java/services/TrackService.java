@@ -2,10 +2,9 @@ package services;
 
 import dto.Tracks;
 import dto.User;
-import interfaces.IAuthToken;
-import interfaces.IPlaylist;
-import interfaces.ITrack;
-import interfaces.IUser;
+import exceptions.UserNotAuthorizedException;
+import interfaces.IAuthTokenDAO;
+import interfaces.ITrackDAO;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -16,19 +15,22 @@ import javax.ws.rs.core.Response;
 
 @Path("tracks")
 public class TrackService {
-	@Inject
-	private IPlaylist playlistDAO;
 
-	@Inject
-	private IAuthToken authDAO;
+	private IAuthTokenDAO authDAO;
 
-	@Inject
-	private IUser userDAO;
-
-	@Inject
-	private ITrack trackDAO;
+	private ITrackDAO trackDAO;
 
 	public TrackService() {
+	}
+
+	@Inject
+	public void setAuthDAO(IAuthTokenDAO authDAO) {
+		this.authDAO = authDAO;
+	}
+
+	@Inject
+	public void setTrackDAO(ITrackDAO trackDAO) {
+		this.trackDAO = trackDAO;
 	}
 
 	@GET
@@ -36,15 +38,12 @@ public class TrackService {
 	public Response getAllTracks(@QueryParam("forPlaylist") int playlistId, @QueryParam("token") String token) {
 		try {
 			User user = authDAO.getUserByToken(token);
-			if (user == null) {
-				return Response.status(403).build();
-			}
 			Tracks result = trackDAO.getAllTracksNotInPlaylist(playlistId);
 			return Response.ok().entity(result).build();
-		} catch (Exception e){
-			e.printStackTrace();
+		} catch (Exception e) {
 			return Response.status(400).build();
 		}
 	}
+
 
 }

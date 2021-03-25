@@ -14,7 +14,9 @@ public class Playlist {
 		this.owner = owner;
 		this.tracks = tracks;
 	}
-	public Playlist(){}
+
+	public Playlist() {
+	}
 
 
 	public int getId() {

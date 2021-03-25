@@ -1,4 +1,5 @@
 # Build
+
 mvn clean package && docker build -t han.dea/spotitube .
 
 # RUN

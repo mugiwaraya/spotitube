@@ -2,7 +2,8 @@ package dao;
 
 import dto.User;
 import exceptions.UserNotFoundByTokenException;
-import interfaces.IUser;
+import interfaces.IDatabaseConnection;
+import interfaces.IUserDAO;
 
 import javax.inject.Inject;
 import java.sql.Connection;
@@ -12,12 +13,12 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class UserDAO implements IUser {
+public class UserDAO implements IUserDAO {
 	private Connection conn;
 	private final static Logger LOGGER = Logger.getLogger(UserDAO.class.getName());
 
 	@Inject
-	public UserDAO(DatabaseConnection databaseConnection) {
+	public UserDAO(IDatabaseConnection databaseConnection) throws Exception {
 		this.conn = databaseConnection.getConnection();
 		LOGGER.setLevel(Level.WARNING);
 	}
@@ -39,12 +40,13 @@ public class UserDAO implements IUser {
 			stm.close();
 		} catch (SQLException e) {
 			LOGGER.log(Level.SEVERE, "A problem has occured with the database:" + e.getMessage());
- 			throw new RuntimeException("Couldn't connect to database.");
+			throw new RuntimeException("Couldn't connect to database.");
 		}
 		return user;
 	}
 
-	public String getUserByToken(String token) throws UserNotFoundByTokenException {
+
+	public boolean authorizedByToken(String token) throws UserNotFoundByTokenException {
 		String query = "select username from users where token = ?";
 		try (
 				PreparedStatement statement = conn.prepareStatement(query)
@@ -54,11 +56,10 @@ public class UserDAO implements IUser {
 			ResultSet rs = statement.executeQuery();
 
 			while (rs.next()) {
-				return rs.getString("username");
+				return true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-
 			throw new UserNotFoundByTokenException();
 		}
 

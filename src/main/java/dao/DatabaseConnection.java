@@ -1,5 +1,7 @@
 package dao;
 
+import interfaces.IDatabaseConnection;
+
 import javax.ejb.Singleton;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Singleton
-public class DatabaseConnection {
+public class DatabaseConnection implements IDatabaseConnection {
 	private static final String filename = "connection.properties";
 
 	Properties props;
@@ -33,7 +35,6 @@ public class DatabaseConnection {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(URL, username, password);
 		} catch (IOException | SQLException | ClassNotFoundException e) {
-			e.printStackTrace();
 			LOGGER.log(Level.SEVERE, "Couldn't connect to database:" + e.toString());
 			throw new RuntimeException("Couldn't connect to database the error message is: " + e.getMessage());
 		}
