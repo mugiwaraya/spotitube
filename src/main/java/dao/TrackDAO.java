@@ -1,12 +1,12 @@
 package dao;
 
-import dto.TrackDTO;
-import dto.TracksDTO;
+import dto.Track;
+import dto.Tracks;
 import exceptions.DeleteException;
+import exceptions.InsertionException;
 import exceptions.TrackException;
 import exceptions.UpdateException;
 import interfaces.ITrack;
-import exceptions.InsertionException;
 
 import javax.inject.Inject;
 import java.sql.Connection;
@@ -24,7 +24,7 @@ public class TrackDAO implements ITrack {
         this.conn = conn.getConnection();
     }
 
-    public TracksDTO getTracksInPlaylist(int playlistId) throws TrackException {
+    public Tracks getTracksInPlaylist(int playlistId) throws TrackException {
         String query = "select * from tracks \n" +
                 "where id in (\n" +
                 "select trackId \n" +
@@ -34,8 +34,8 @@ public class TrackDAO implements ITrack {
         return executeGetTracksQuery(query, playlistId);
     }
 
-    public TracksDTO getAllTracksNotInPlaylist(int playlistId) throws TrackException {
-        String query = "select * from track \n" +
+    public Tracks getAllTracksNotInPlaylist(int playlistId) throws TrackException {
+        String query = "select * from tracks \n" +
                 "where id not in (\n" +
                 "select trackid \n" +
                 "from trackinplaylist \n" +
@@ -60,14 +60,14 @@ public class TrackDAO implements ITrack {
         }
     }
 
-    public void addTrackToPlaylist(int playlistId, TrackDTO dto) throws InsertionException {
+    public void addTrackToPlaylist(int playlistId, Track dto) throws InsertionException {
         String query = "insert into trackinplaylist values (?,?)";
 
         try (
                 PreparedStatement statement = conn.prepareStatement(query)
         ) {
-            statement.setInt(1, dto.getId());
-            statement.setInt(2, playlistId);
+            statement.setInt(1, playlistId);
+            statement.setInt(2, dto.getId());
             statement.execute();
             updateTrackAvailability(dto.isOfflineAvailable(), dto.getId());
 
@@ -93,8 +93,8 @@ public class TrackDAO implements ITrack {
         }
     }
 
-    private TracksDTO executeGetTracksQuery(String query, int playlistId) throws TrackException {
-        List<TrackDTO> tracks = new ArrayList<>();
+    private Tracks executeGetTracksQuery(String query, int playlistId) throws TrackException {
+        List<Track> tracks = new ArrayList<>();
         try (
                 PreparedStatement statement = conn.prepareStatement(query)
         ) {
@@ -103,7 +103,7 @@ public class TrackDAO implements ITrack {
             ResultSet rs = statement.executeQuery();
 
             while (rs.next()) {
-                tracks.add(new TrackDTO(
+                tracks.add(new Track(
                         rs.getInt("id"),
                         rs.getString("title"),
                         rs.getString("performer"),
@@ -116,7 +116,7 @@ public class TrackDAO implements ITrack {
                 ));
             }
 
-            return new TracksDTO(tracks);
+            return new Tracks(tracks);
         } catch (Exception e) {
             e.printStackTrace();
 

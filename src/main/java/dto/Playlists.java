@@ -3,22 +3,22 @@ package dto;
 import javax.json.bind.annotation.JsonbProperty;
 import java.util.List;
 
-public class PlaylistsDTO {
+public class Playlists {
 	@JsonbProperty
-	private List<PlaylistDTO> playlists;
+	private List<Playlist> playlists;
 	@JsonbProperty
 	private int length;
 
-	public PlaylistsDTO(List<PlaylistDTO> playlists, int length) {
+	public Playlists(List<Playlist> playlists, int length) {
 		this.playlists = playlists;
 		this.length = length;
 	}
 
-	public List<PlaylistDTO> getPlaylists() {
+	public List<Playlist> getPlaylists() {
 		return playlists;
 	}
 
-	public void setPlaylists(List<PlaylistDTO> playlists) {
+	public void setPlaylists(List<Playlist> playlists) {
 		this.playlists = playlists;
 	}
 

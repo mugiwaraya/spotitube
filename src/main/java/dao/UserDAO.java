@@ -1,6 +1,6 @@
 package dao;
 
-import dto.UserDTO;
+import dto.User;
 import exceptions.UserNotFoundByTokenException;
 import interfaces.IUser;
 
@@ -23,8 +23,8 @@ public class UserDAO implements IUser {
 	}
 
 	@Override
-	public UserDTO login(String username, String password) {
-		UserDTO userDTO = null;
+	public User login(String username, String password) {
+		User user = null;
 		String query = "SELECT id, username, name, email, token FROM users WHERE username = ? and password = ?";
 		try {
 			PreparedStatement stm = conn.prepareStatement(query);
@@ -33,7 +33,7 @@ public class UserDAO implements IUser {
 			ResultSet rs = stm.executeQuery();
 
 			while (rs.next()) {
-				userDTO = new UserDTO(rs.getInt("id"), rs.getString("username"),
+				user = new User(rs.getInt("id"), rs.getString("username"),
 						rs.getString("name"), rs.getString("email"), rs.getString("token"));
 			}
 			stm.close();
@@ -41,7 +41,7 @@ public class UserDAO implements IUser {
 			LOGGER.log(Level.SEVERE, "A problem has occured with the database:" + e.getMessage());
  			throw new RuntimeException("Couldn't connect to database.");
 		}
-		return userDTO;
+		return user;
 	}
 
 	public String getUserByToken(String token) throws UserNotFoundByTokenException {

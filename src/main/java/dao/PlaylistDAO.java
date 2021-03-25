@@ -1,9 +1,9 @@
 package dao;
 
 import dto.AddPlayListDTO;
-import dto.PlaylistDTO;
+import dto.Playlist;
+import dto.Playlists;
 import interfaces.IPlaylist;
-import dto.PlaylistsDTO;
 
 import javax.inject.Inject;
 import java.sql.*;
@@ -23,8 +23,8 @@ public class PlaylistDAO implements IPlaylist {
 	}
 
 	@Override
-	public PlaylistsDTO getAllPlaylists(int userId) {
-		List<PlaylistDTO> playlists = new ArrayList<>();
+	public Playlists getAllPlaylists(int userId) {
+		List<Playlist> playlists = new ArrayList<>();
 		String query = "select  playlists.id, playlists.name, playlists.ownerId, sum(tracks.duration) as length\n" +
 				"from `playlists`\n" +
 				"left join trackinplaylist on playlists.id = trackinplaylist.playlistId\n" +
@@ -37,7 +37,7 @@ public class PlaylistDAO implements IPlaylist {
 			stm.setInt(1, userId);
 			ResultSet rs = stm.executeQuery();
 			while (rs.next()) {
-				playlists.add(new PlaylistDTO(rs.getInt("id"), rs.getString("name"), rs.getInt("ownerId") == userId, null));
+				playlists.add(new Playlist(rs.getInt("id"), rs.getString("name"), rs.getInt("ownerId") == userId, null));
 				totalLength += rs.getInt("length");
 			}
 
@@ -46,7 +46,7 @@ public class PlaylistDAO implements IPlaylist {
 			LOGGER.log(Level.SEVERE, "Something went wrong with getting all the playlists from the DB: " + e);
 		}
 
-		return new PlaylistsDTO(playlists, totalLength);
+		return new Playlists(playlists, totalLength);
 	}
 
 
@@ -92,7 +92,7 @@ public class PlaylistDAO implements IPlaylist {
 	}
 
 	@Override
-	public PlaylistDTO editPlaylist(PlaylistDTO playlist, int playlistId) {
+	public Playlist editPlaylist(Playlist playlist, int playlistId) {
 		String query = "UPDATE playlists " +
 				"SET name = ? \n" +
 				"WHERE id = ?";
@@ -101,16 +101,9 @@ public class PlaylistDAO implements IPlaylist {
 			stm.setString(1, playlist.getName());
 			stm.setInt(2, playlist.getId());
 			stm.executeUpdate();
-			try (ResultSet generatedKeys = stm.getGeneratedKeys()) {
-				if (generatedKeys.next()) {
-					playlist.setId(generatedKeys.getInt(1));
-				} else {
-					throw new SQLException("Updating playlist failed, no ID obtained.");
-				}
-			}
 			stm.close();
-
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			LOGGER.log(Level.SEVERE, "Something went wrong with updating the playlist in the DB: " + e);
 			return null;
 		}

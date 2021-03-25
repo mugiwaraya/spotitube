@@ -1,6 +1,6 @@
 package dto;
 
-public class UserDTO {
+public class User {
     private int id;
     private String name;
     private String username;
@@ -8,7 +8,7 @@ public class UserDTO {
     private String token;
 
 
-    public UserDTO(int id, String username, String name, String email, String token) {
+    public User(int id, String username, String name, String email, String token) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -16,7 +16,7 @@ public class UserDTO {
         this.token = this.token != null ? this.token = token : "";
     }
 
-    public UserDTO(int id, String name) {
+    public User(int id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -36,6 +36,7 @@ public class UserDTO {
     public String getEmail() {
         return email;
     }
+
     public String getToken() {return token;}
 
 }

@@ -2,18 +2,20 @@ package dto;
 
 import java.util.List;
 
-public class PlaylistDTO {
+public class Playlist {
 	private int id;
 	private String name;
 	private boolean owner;
-	private List<TrackDTO> tracks;
+	private List<Track> tracks;
 
-	public PlaylistDTO(int id, String name, boolean owner, List<TrackDTO> tracks) {
+	public Playlist(int id, String name, boolean owner, List<Track> tracks) {
 		this.id = id;
 		this.name = name;
 		this.owner = owner;
 		this.tracks = tracks;
 	}
+	public Playlist(){}
+
 
 	public int getId() {
 		return id;
@@ -39,11 +41,11 @@ public class PlaylistDTO {
 		this.owner = owner;
 	}
 
-	public List<TrackDTO> getTracks() {
+	public List<Track> getTracks() {
 		return tracks;
 	}
 
-	public void setTracks(List<TrackDTO> tracks) {
+	public void setTracks(List<Track> tracks) {
 		this.tracks = tracks;
 	}
 }

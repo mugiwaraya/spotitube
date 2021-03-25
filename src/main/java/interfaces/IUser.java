@@ -1,8 +1,8 @@
 package interfaces;
 
-import dto.UserDTO;
+import dto.User;
 
 public interface IUser {
-    UserDTO login(String username, String password);
+    User login(String username, String password);
 }
 

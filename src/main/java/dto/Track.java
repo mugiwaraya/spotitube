@@ -1,6 +1,6 @@
 package dto;
 
-public class TrackDTO {
+public class Track {
 	private int id;
 	private String title;
 	private String performer;
@@ -11,7 +11,7 @@ public class TrackDTO {
 	private String description;
 	private boolean offlineAvailable;
 
-	public TrackDTO(int id, String title, String performer, int duration, String album, int playcount, String publicationDate, String description, boolean offlineAvailable) {
+	public Track(int id, String title, String performer, int duration, String album, int playcount, String publicationDate, String description, boolean offlineAvailable) {
 		this.id = id;
 		this.title = title;
 		this.performer = performer;
@@ -23,14 +23,8 @@ public class TrackDTO {
 		this.offlineAvailable = offlineAvailable;
 	}
 
-	public TrackDTO(int id, String title, String performer, String url, int duration, Boolean offlineAvailable) {
-		this.id = id;
-		this.title = title;
-		this.performer = performer;
-		this.duration = duration;
-		this.offlineAvailable = offlineAvailable;
+	public Track() {
 	}
-
 
 	public int getId() {
 		return id;

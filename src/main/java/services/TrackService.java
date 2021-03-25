@@ -1,7 +1,7 @@
 package services;
 
-import dto.UserDTO;
-import dto.TracksDTO;
+import dto.Tracks;
+import dto.User;
 import interfaces.IAuthToken;
 import interfaces.IPlaylist;
 import interfaces.ITrack;
@@ -35,11 +35,11 @@ public class TrackService {
 	@Produces("application/json")
 	public Response getAllTracks(@QueryParam("forPlaylist") int playlistId, @QueryParam("token") String token) {
 		try {
-			UserDTO userDTO = authDAO.getUserByToken(token);
-			if (userDTO == null) {
+			User user = authDAO.getUserByToken(token);
+			if (user == null) {
 				return Response.status(403).build();
 			}
-			TracksDTO result = trackDAO.getAllTracksNotInPlaylist(playlistId);
+			Tracks result = trackDAO.getAllTracksNotInPlaylist(playlistId);
 			return Response.ok().entity(result).build();
 		} catch (Exception e){
 			e.printStackTrace();

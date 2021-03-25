@@ -1,6 +1,6 @@
 package dao;
 
-import dto.UserDTO;
+import dto.User;
 import interfaces.IAuthToken;
 
 import javax.inject.Inject;
@@ -29,8 +29,8 @@ public class AuthTokenDAO implements IAuthToken {
     }
 
     @Override
-    public UserDTO getUserByToken(String token) throws NotAuthorizedException {
-        UserDTO userDTO = null;
+    public User getUserByToken(String token) throws NotAuthorizedException {
+        User user = null;
         String query = "SELECT id, name FROM users where token = ?";
 
 
@@ -40,27 +40,27 @@ public class AuthTokenDAO implements IAuthToken {
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                userDTO = new UserDTO(resultSet.getInt("id"), resultSet.getString("name"));
+                user = new User(resultSet.getInt("id"), resultSet.getString("name"));
             }
             statement.close();
         } catch ( SQLException e ) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Error: Cannot connect with the database, " +  e);
         }
 
-        if (userDTO == null) {
+        if (user == null) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Authorization failed!");
             throw new NotAuthorizedException("Unauthorized access");
         }
-        return userDTO;
+        return user;
     }
 
     @Override
-    public boolean insertToken(UserDTO userDTO, String token) {
+    public boolean insertToken(User user, String token) {
         String query = "UPDATE users SET token = ? WHERE id = ?";
         try {
             PreparedStatement stm = conn.prepareStatement(query);
             stm.setString(1, token);
-            stm.setInt(2, userDTO.getId());
+            stm.setInt(2, user.getId());
             stm.executeUpdate();
             stm.close();
             return true;
