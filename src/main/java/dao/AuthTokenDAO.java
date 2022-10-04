@@ -2,7 +2,6 @@ package dao;
 
 import dto.User;
 import exceptions.TokenSavingFailedException;
-import exceptions.UserNotAuthorizedException;
 import exceptions.UserNotFoundByTokenException;
 import interfaces.IAuthTokenDAO;
 import interfaces.IDatabaseConnection;
@@ -25,11 +24,6 @@ public class AuthTokenDAO implements IAuthTokenDAO {
 	public AuthTokenDAO(IDatabaseConnection databaseConnection) throws Exception {
 		this.conn = databaseConnection.getConnection();
 		LOGGER.setLevel(Level.WARNING);
-	}
-
-	public AuthTokenDAO()
-	{
-
 	}
 
 	@Override
