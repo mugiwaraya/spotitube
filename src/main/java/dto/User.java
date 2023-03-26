@@ -1,13 +1,26 @@
 package dto;
 
-public class User {
-	private int id;
-	private String name;
-	private String username;
-	private String email;
-	private String token;
 
+import javax.persistence.EntityManager;
+import javax.persistence.*;
+@Entity
+@Table(name="student")
+public class User {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int id;
+	@Column(name = "name", nullable = false, length = 255)
+	private String name;
+	@Column(name = "username", nullable = false, length = 255)
+	private String username;
+	@Column(name = "email", nullable = false, length = 255)
+	private String email;
+	@Column(name = "token", nullable = false, length = 255)
+	private String token;
+	@Column(name = "password", nullable = false, length = 255)
 	private String password;
+
+
 
 	public String getPassword() {
 		return password;
