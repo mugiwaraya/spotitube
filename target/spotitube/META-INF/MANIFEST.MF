@@ -1,5 +1,5 @@
 Manifest-Version: 1.0
-Built-By: aliyi
 Created-By: IntelliJ IDEA
-Build-Jdk: BellSoft Liberica version 1.8.0_345
+Built-By: LulzSec
+Build-Jdk: Amazon Corretto version 1.8.0_362
 
