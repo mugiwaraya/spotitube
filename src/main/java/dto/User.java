@@ -7,6 +7,15 @@ public class User {
 	private String email;
 	private String token;
 
+	private String password;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public User(int id, String username, String name, String email, String token) {
 		this.id = id;
