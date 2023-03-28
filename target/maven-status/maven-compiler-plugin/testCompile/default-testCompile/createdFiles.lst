@@ -1,0 +1,4 @@
+PlaylistServiceTest.class
+AuthServiceTest.class
+dao\AuthTokenDAOTest.class
+TrackServiceTest.class
