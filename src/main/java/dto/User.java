@@ -3,6 +3,8 @@ package dto;
 
 import javax.persistence.EntityManager;
 import javax.persistence.*;
+import java.util.List;
+
 @Entity
 @Table(name="student")
 public class User {
@@ -19,6 +21,8 @@ public class User {
 	private String token;
 	@Column(name = "password", nullable = false, length = 255)
 	private String password;
+	@OneToMany(targetEntity = Playlist.class, cascade = CascadeType.ALL)
+	private List<Playlist> playlists;
 
 
 

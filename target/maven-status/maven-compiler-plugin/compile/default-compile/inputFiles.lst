@@ -4,7 +4,6 @@ C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\services\AuthService.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dao\TrackDAO.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\interfaces\IPlaylistDAO.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dto\Playlists.java
-C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\interfaces\Dao.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\interfaces\IDatabaseConnection.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dao\PlaylistDAO.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dto\Tracks.java

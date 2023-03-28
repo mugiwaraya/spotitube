@@ -1,4 +1,3 @@
-interfaces\Dao.class
 exceptions\TokenSavingFailedException.class
 dto\Track.class
 dto\User.class
