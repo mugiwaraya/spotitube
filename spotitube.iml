@@ -17,7 +17,9 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
+          <factory-entry name="MyPersistenceUnit" />
           <factory-entry name="spotitube" />
+          <factory-entry name="user_pu" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
