@@ -13,7 +13,7 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@ApplicationPath("")
+
 @Path("/login")
 public class AuthService {
 
@@ -46,9 +46,8 @@ public class AuthService {
 	private Response authorize(AuthRequestDTO requestDTO) throws UserNotAuthorizedException, TokenSavingFailedException {
 		User user = userDAO.login(requestDTO.getUsername(), requestDTO.getPassword());
 		if (user != null) {
-			String token = authTokenDAO.generateToken();
-			authTokenDAO.insertToken(user, token);
-			return Response.status(201).entity(new AuthResponseDTO(user.getName(), token)).build();
+			authTokenDAO.insertToken(user);
+			return Response.status(201).entity(new AuthResponseDTO(user.getName(), user.getToken())).build();
 		}
 		return Response.status(401).build();
 	}
