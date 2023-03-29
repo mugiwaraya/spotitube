@@ -2,18 +2,18 @@ package dto;
 
 import javax.json.bind.annotation.JsonbProperty;
 
-public class AuthRequestDTO {
+public class LoginRequestDTO {
 	@JsonbProperty("user")
 	private String username;
 	@JsonbProperty("password")
 	private String password;
 
-	public AuthRequestDTO()
+	public LoginRequestDTO()
 	{
 
 	}
 
-	public AuthRequestDTO(String username, String password) {
+	public LoginRequestDTO(String username, String password) {
 		this.username = username;
 		this.password = password;
 	}

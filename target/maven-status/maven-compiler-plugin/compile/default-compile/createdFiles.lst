@@ -19,7 +19,6 @@ services\TrackService.class
 dao\PlaylistDAO.class
 exceptions\DeleteException.class
 dao\UserRepository.class
-dao\DatabaseConnection.class
 interfaces\ITrackDAO.class
 dao\TrackDAO.class
 dao\TrackRepository.class

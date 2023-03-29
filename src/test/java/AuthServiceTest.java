@@ -1,4 +1,4 @@
-import dto.AuthRequestDTO;
+import dto.LoginRequestDTO;
 import dto.User;
 import exceptions.TokenSavingFailedException;
 import exceptions.UserNotAuthorizedException;
@@ -32,13 +32,13 @@ class AuthServiceTest {
 
 	private static AuthService authService;
 
-	private AuthRequestDTO authRequestDTO;
+	private LoginRequestDTO loginRequestDTO;
 	private User testUser;
 
 	@BeforeEach
 	void setupBeforeEach() {
 		MockitoAnnotations.initMocks(this);
-		authRequestDTO = new AuthRequestDTO();
+		loginRequestDTO = new LoginRequestDTO();
 		authService = new AuthService();
 		authService.setAuthTokenDAO(authTokenDAO);
 		authService.setUserDAO(userDAO);
@@ -47,15 +47,15 @@ class AuthServiceTest {
 
 	@Test
 	void login() throws UserNotAuthorizedException, TokenSavingFailedException {
-		when(userDAO.login(authRequestDTO.getUsername(), authRequestDTO.getPassword())).thenReturn(testUser);
-		Response response = authService.login(authRequestDTO);
+		when(userDAO.login(loginRequestDTO.getUsername(), loginRequestDTO.getPassword())).thenReturn(testUser);
+		Response response = authService.login(loginRequestDTO);
 		Assertions.assertEquals(STATUS_CREATED, response.getStatus());
 	}
 
 	@Test
 	void loginWithWrongCredentials() throws UserNotAuthorizedException, TokenSavingFailedException {
-		when(userDAO.login(authRequestDTO.getUsername(), authRequestDTO.getPassword())).thenReturn(null);
-		Response response = authService.login(authRequestDTO);
+		when(userDAO.login(loginRequestDTO.getUsername(), loginRequestDTO.getPassword())).thenReturn(null);
+		Response response = authService.login(loginRequestDTO);
 		Assertions.assertEquals(STATUS_UNAUTHORIZED, response.getStatus());
 	}
 }

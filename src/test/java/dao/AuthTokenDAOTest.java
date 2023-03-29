@@ -1,6 +1,6 @@
 package dao;
 
-import dto.AuthRequestDTO;
+import dto.LoginRequestDTO;
 import dto.AuthResponseDTO;
 import dto.User;
 import exceptions.TokenSavingFailedException;
@@ -38,7 +38,7 @@ class AuthTokenDAOTest {
 
 	private static Connection conn;
 	private static IAuthTokenDAO tokenDAO;
-	private static AuthRequestDTO authRequestDTO;
+	private static LoginRequestDTO loginRequestDTO;
 	private static AuthResponseDTO authResponseDTO;
 	private static User user;
 
@@ -49,7 +49,7 @@ class AuthTokenDAOTest {
 		Mockito.when(databaseConnection.getConnection()).thenReturn(conn);
 		tokenDAO = new AuthTokenDAO(databaseConnection);
 		authResponseDTO = new AuthResponseDTO("Janjansen123", "8cac5d0e-7417-4809-a3a9-11d8bde73f32");
-		authRequestDTO = new AuthRequestDTO("Janjansen123", "password123");
+		loginRequestDTO = new LoginRequestDTO("Janjansen123", "password123");
 		user = new User(1, "Janjansen123", "Jan Jansen", "Janjansen@gmail.com", "8cac5d0e-7417-4809-a3a9-11d8bde73f32");
 	}
 
