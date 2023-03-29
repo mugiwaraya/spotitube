@@ -10,5 +10,5 @@ public interface IAuthTokenDAO {
 
 	User getUserByToken(String token) throws UserNotFoundByTokenException;
 
-	boolean insertToken(User user, String token) throws TokenSavingFailedException;
+	boolean insertToken(User user) throws TokenSavingFailedException;
 }
