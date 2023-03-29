@@ -1,14 +1,27 @@
 package dto;
 
+import javax.persistence.*;
+
+@Entity
 public class Track {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@Column(name = "title", nullable = false, length = 255)
 	private String title;
+	@Column(name = "performer", nullable = false, length = 255)
 	private String performer;
+	@Column(name = "duration", nullable = false, length = 255)
 	private int duration;
+	@Column(name = "album", nullable = false, length = 255)
 	private String album;
+	@Column(name = "playcount", nullable = false, length = 255)
 	private int playcount;
+	@Column(name = "publicationDate", nullable = false, length = 255)
 	private String publicationDate;
+	@Column(name = "description", nullable = false, length = 255)
 	private String description;
+	@Column(name = "offlineAvailable", nullable = false, length = 255)
 	private boolean offlineAvailable;
 
 	public Track(int id, String title, String performer, int duration, String album, int playcount, String publicationDate, String description, boolean offlineAvailable) {

@@ -11,7 +11,7 @@ public class PlaylistRepository {
     private EntityManager entityManager;
 
     public PlaylistRepository() {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("playlist_pu");
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("MyPersistenceUnit");
         this.entityManager = entityManagerFactory.createEntityManager();
     }
 

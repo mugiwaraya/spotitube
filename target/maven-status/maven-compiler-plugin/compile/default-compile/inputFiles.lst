@@ -9,9 +9,11 @@ C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dao\PlaylistDAO.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dto\Tracks.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dto\Playlist.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dao\AuthTokenDAO.java
+C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dao\PlaylistRepository.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\interfaces\IUserDAO.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dto\User.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\exceptions\TrackException.java
+C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dao\UserRepository.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dto\AuthRequestDTO.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\exceptions\InsertionException.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\exceptions\UnableToLoginException.java
@@ -23,6 +25,7 @@ C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\exceptions\UpdateException
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\exceptions\UserNotAuthorizedException.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dto\AuthResponseDTO.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dao\UserDAO.java
+C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dao\TrackRepository.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dto\Track.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\interfaces\ITrackDAO.java
 C:\Users\LulzSec\IdeaProjects\spotitube\src\main\java\dto\AddPlayListDTO.java

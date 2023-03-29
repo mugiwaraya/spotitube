@@ -22,7 +22,7 @@ public class AuthTokenDAO implements IAuthTokenDAO {
 
 	@Inject
 	public AuthTokenDAO(IDatabaseConnection databaseConnection) throws Exception {
-		this.conn = databaseConnection.getConnection();
+//		this.conn = databaseConnection.getConnection();
 		LOGGER.setLevel(Level.WARNING);
 	}
 
@@ -34,23 +34,23 @@ public class AuthTokenDAO implements IAuthTokenDAO {
 	@Override
 	public User getUserByToken(String token) throws UserNotFoundByTokenException {
 		User user = null;
-		String query = "SELECT id, username, name FROM users where token = ?";
-		try {
-			PreparedStatement statement = conn.prepareStatement(query);
-			statement.setString(1, token);
-
-			ResultSet resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				user = new User(resultSet.getInt("id"), resultSet.getString("username"), resultSet.getString("name"));
-			}
-			statement.close();
-		} catch (SQLException e) {
-			Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Error: Cannot connect with the database, " + e);
-		}
-		if (user == null) {
-			Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Authorization failed!");
-			throw new UserNotFoundByTokenException();
-		}
+//		String query = "SELECT id, username, name FROM users where token = ?";
+//		try {
+//			PreparedStatement statement = conn.prepareStatement(query);
+//			statement.setString(1, token);
+//
+//			ResultSet resultSet = statement.executeQuery();
+//			while (resultSet.next()) {
+//				user = new User(resultSet.getInt("id"), resultSet.getString("username"), resultSet.getString("name"));
+//			}
+//			statement.close();
+//		} catch (SQLException e) {
+//			Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Error: Cannot connect with the database, " + e);
+//		}
+//		if (user == null) {
+//			Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Authorization failed!");
+//			throw new UserNotFoundByTokenException();
+//		}
 		return user;
 	}
 

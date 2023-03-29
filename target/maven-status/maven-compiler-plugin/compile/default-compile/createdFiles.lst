@@ -9,6 +9,7 @@ dto\AuthRequestDTO.class
 dao\UserDAO.class
 exceptions\UnableToLoginException.class
 services\AuthService.class
+dao\PlaylistRepository.class
 interfaces\IDatabaseConnection.class
 dto\Playlist.class
 exceptions\UserNotAuthorizedException.class
@@ -17,9 +18,11 @@ exceptions\InsertionException.class
 services\TrackService.class
 dao\PlaylistDAO.class
 exceptions\DeleteException.class
+dao\UserRepository.class
 dao\DatabaseConnection.class
 interfaces\ITrackDAO.class
 dao\TrackDAO.class
+dao\TrackRepository.class
 exceptions\UpdateException.class
 interfaces\IPlaylistDAO.class
 dto\AddPlayListDTO.class
