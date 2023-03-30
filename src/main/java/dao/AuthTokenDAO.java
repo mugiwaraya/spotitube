@@ -4,16 +4,10 @@ import dto.User;
 import exceptions.TokenSavingFailedException;
 import exceptions.UserNotFoundByTokenException;
 import interfaces.IAuthTokenDAO;
-import interfaces.IDatabaseConnection;
+import repository.UserRepository;
 
 import javax.inject.Inject;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class AuthTokenDAO implements IAuthTokenDAO {
 
@@ -32,17 +26,17 @@ public class AuthTokenDAO implements IAuthTokenDAO {
 
 	@Override
 	public User getUserByToken(String token) throws UserNotFoundByTokenException {
-		return null;
+		return userRepository.getUserByToken(token);
 	}
 
 	@Override
-	public boolean insertToken(User user) throws TokenSavingFailedException {
+	public User insertToken(User user) throws TokenSavingFailedException {
 		try {
-			userRepository.insertToken(user, generateToken());
-			return true;
+			User updatedUser = userRepository.insertToken(user, generateToken());
+			return updatedUser;
 		} catch (Exception e) {
 			e.printStackTrace();
-			return false;
+			return null;
 		}
 	}
 

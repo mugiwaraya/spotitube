@@ -3,13 +3,13 @@ package dto;
 import javax.json.bind.annotation.JsonbProperty;
 import java.util.List;
 
-public class Playlists {
+public class PlaylistsDTO {
 	@JsonbProperty
 	private List<Playlist> playlists;
 	@JsonbProperty
-	private int length;
+	private long length;
 
-	public Playlists(List<Playlist> playlists, int length) {
+	public PlaylistsDTO(List<Playlist> playlists, long length) {
 		this.playlists = playlists;
 		this.length = length;
 	}
@@ -22,7 +22,7 @@ public class Playlists {
 		this.playlists = playlists;
 	}
 
-	public int getLength() {
+	public long getLength() {
 		return length;
 	}
 

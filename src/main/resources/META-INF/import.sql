@@ -1,0 +1,12 @@
+-- INSERT INTO `users` (`email`, `name`, `password`, `token`, `username`)
+-- VALUES
+--     ('john@example.com', 'John Doe', 'password1', NULL, 'johndoe'),
+--     ('jane@example.com', 'Jane Smith', 'password2', NULL, 'janesmith'),
+--     ('bob@example.com', 'Bob Johnson', 'password3', NULL, 'bobjohnson'),
+--     ('alice@example.com', 'Alice Lee', 'password4', NULL, 'alicelee'),
+--     ('david@example.com', 'David Kim', 'password5', NULL, 'davidkim'),
+--     ('sarah@example.com', 'Sarah Brown', 'password6', NULL, 'sarahbrown'),
+--     ('peter@example.com', 'Peter Davis', 'password7', NULL, 'peterdavis'),
+--     ('jessica@example.com', 'Jessica White', 'password8', NULL, 'jessicawhite'),
+--     ('michael@example.com', 'Michael Jones', 'password9', NULL, 'michaeljones'),
+--     ('emily@example.com', 'Emily Wilson', 'password10', NULL, 'emilywilson');

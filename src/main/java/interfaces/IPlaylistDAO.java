@@ -2,10 +2,11 @@ package interfaces;
 
 import dto.AddPlayListDTO;
 import dto.Playlist;
-import dto.Playlists;
+import dto.PlaylistsDTO;
+import dto.User;
 
 public interface IPlaylistDAO {
-	Playlists getAllPlaylists(int userId);
+	PlaylistsDTO getAllPlaylistsForUser(User user);
 
 	boolean deletePlaylist(int playlistId);
 

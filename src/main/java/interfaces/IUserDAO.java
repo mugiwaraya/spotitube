@@ -5,8 +5,8 @@ import exceptions.UserNotAuthorizedException;
 import exceptions.UserNotFoundByTokenException;
 
 public interface IUserDAO {
-	User login(String username, String password) throws UserNotAuthorizedException;
+    User login(String username, String password) throws UserNotAuthorizedException;
 
-	boolean authorizedByToken(String token) throws UserNotFoundByTokenException;
+    boolean authorizedByToken(String token) throws UserNotFoundByTokenException;
 }
 

@@ -5,23 +5,24 @@ import java.util.List;
 public class AddPlayListDTO {
 	private int id;
 	private String name;
-	private int ownerId;
+	private User owner;
 	private List<Track> tracks;
 
-	public AddPlayListDTO(int id, String name, int ownerId, List<Track> tracks) {
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public AddPlayListDTO(int id, String name, User owner, List<Track> tracks) {
 		this.id = id;
 		this.name = name;
-		this.ownerId = ownerId;
+		this.owner = owner;
 		this.tracks = tracks;
 	}
 
-	public int getOwnerId() {
-		return ownerId;
-	}
-
-	public void setOwnerId(int ownerId) {
-		this.ownerId = ownerId;
-	}
 
 	public int getId() {
 		return id;

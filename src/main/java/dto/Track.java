@@ -1,14 +1,28 @@
 package dto;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="tracks")
 public class Track {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	@Column(name = "title", nullable = false, length = 255)
 	private String title;
+	@Column(name = "performer", nullable = false, length = 255)
 	private String performer;
-	private int duration;
+	@Column(name = "duration", nullable = false, length = 255)
+	private long duration;
+	@Column(name = "album", nullable = false, length = 255)
 	private String album;
+	@Column(name = "playcount", nullable = false, length = 255)
 	private int playcount;
+	@Column(name = "publicationDate", nullable = false, length = 255)
 	private String publicationDate;
+	@Column(name = "description", nullable = false, length = 255)
 	private String description;
+	@Column(name = "offlineAvailable", nullable = false, length = 255)
 	private boolean offlineAvailable;
 
 	public Track(int id, String title, String performer, int duration, String album, int playcount, String publicationDate, String description, boolean offlineAvailable) {
@@ -23,8 +37,20 @@ public class Track {
 		this.offlineAvailable = offlineAvailable;
 	}
 
-	public Track() {
-	}
+	//	public Track(int id, String title, String performer, int duration, String album, int playcount, String publicationDate, String description, boolean offlineAvailable) {
+//		this.id = id;
+//		this.title = title;
+//		this.performer = performer;
+//		this.duration = duration;
+//		this.album = album;
+//		this.playcount = playcount;
+//		this.publicationDate = publicationDate;
+//		this.description = description;
+//		this.offlineAvailable = offlineAvailable;
+//	}
+//
+//	public Track() {
+//	}
 
 	public int getId() {
 		return id;
@@ -50,7 +76,7 @@ public class Track {
 		this.performer = performer;
 	}
 
-	public int getDuration() {
+	public long getDuration() {
 		return duration;
 	}
 
@@ -98,4 +124,3 @@ public class Track {
 		this.offlineAvailable = offlineAvailable;
 	}
 }
-

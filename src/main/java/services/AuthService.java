@@ -46,8 +46,8 @@ public class AuthService {
 	private Response authorize(AuthRequestDTO requestDTO) throws UserNotAuthorizedException, TokenSavingFailedException {
 		User user = userDAO.login(requestDTO.getUsername(), requestDTO.getPassword());
 		if (user != null) {
-			authTokenDAO.insertToken(user);
-			return Response.status(201).entity(new AuthResponseDTO(user.getName(), user.getToken())).build();
+			User updatedUser = authTokenDAO.insertToken(user);
+			return Response.status(201).entity(new AuthResponseDTO(user.getName(), updatedUser.getToken())).build();
 		}
 		return Response.status(401).build();
 	}
