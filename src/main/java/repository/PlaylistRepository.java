@@ -38,8 +38,6 @@ public class PlaylistRepository {
 
         try {
             List<Playlist> playlistsOfUser = this.entityManager.createQuery("SELECT p FROM Playlist p WHERE p.user = :user", Playlist.class).setParameter("user", user).getResultList();
-            PlaylistsDTO dto = new PlaylistsDTO(Collections.emptyList(), 0);
-//            dto.setPlaylists(playlistsOfUser);
             long totalLength = 0;
             for (Playlist pl : playlistsOfUser) {
                 totalLength += pl.getLength();

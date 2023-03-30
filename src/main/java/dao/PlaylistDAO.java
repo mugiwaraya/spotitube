@@ -20,7 +20,12 @@ public class PlaylistDAO implements IPlaylistDAO {
 
     @Override
     public PlaylistsDTO getAllPlaylistsForUser(User user) {
-        return (PlaylistsDTO) playlistRepository.getAllPlaylists(user);
+        return  playlistRepository.getAllPlaylists(user);
+    }
+
+    @Override
+    public PlaylistsDTO getAllPlaylists() {
+        return null;
     }
 
     @Override

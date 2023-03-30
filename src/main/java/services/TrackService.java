@@ -35,6 +35,7 @@ public class TrackService {
     @GET
     @Produces("application/json")
     public Response getAllTracks(@QueryParam("forPlaylist") int playlistId, @QueryParam("token") String token) {
+        String o = "getAllTracks";
         try {
             User user = authDAO.getUserByToken(token);
             Tracks result = trackDAO.getAllTracksNotInPlaylist(playlistId);

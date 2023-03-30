@@ -8,6 +8,8 @@ import dto.User;
 public interface IPlaylistDAO {
 	PlaylistsDTO getAllPlaylistsForUser(User user);
 
+	PlaylistsDTO getAllPlaylists();
+
 	boolean deletePlaylist(int playlistId);
 
 	AddPlayListDTO addPlaylist(AddPlayListDTO playlist);
