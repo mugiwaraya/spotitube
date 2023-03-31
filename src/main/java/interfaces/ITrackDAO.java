@@ -14,5 +14,5 @@ public interface ITrackDAO {
 
 	void removeTrackFromPlaylist(int playlistId, int trackId) throws DeleteException;
 
-	void addTrackToPlaylist(int playlistId, Track dto) throws InsertionException;
+	void addTrackToPlaylist(int playlistId, int trackId) throws InsertionException;
 }

@@ -22,22 +22,22 @@ public class TrackDAO implements ITrackDAO {
 
     @Override
     public Tracks getTracksInPlaylist(int playlistId) throws TrackException {
-        return  trackRepository.getTracksInPlaylist(playlistId);
+        return trackRepository.getTracksInPlaylist(playlistId);
     }
 
     @Override
     public Tracks getAllTracksNotInPlaylist(int playlistId) throws TrackException {
-        return null;
+        return trackRepository.getAllTracksNotInPlaylists(playlistId);
     }
 
     @Override
     public void removeTrackFromPlaylist(int playlistId, int trackId) throws DeleteException {
-
+        trackRepository.removeTrackFromPlaylist(playlistId, trackId);
     }
 
     @Override
-    public void addTrackToPlaylist(int playlistId, Track dto) throws InsertionException {
-
+    public void addTrackToPlaylist(int playlistId, int trackId) throws InsertionException {
+        trackRepository.addTrackToPlaylist(playlistId, trackId);
     }
 
 //	private Connection conn;

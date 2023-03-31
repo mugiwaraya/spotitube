@@ -1,5 +1,6 @@
 package dto;
 
+import javax.json.bind.annotation.JsonbProperty;
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,30 +12,42 @@ public class Playlist {
     private int id;
     @Column(name = "name", nullable = false, length = 255)
     private String name;
-    @Column(name = "length", nullable = false, length = 255)
-    private int length;
-    @OneToMany(targetEntity = Track.class, cascade = CascadeType.ALL)
+    @Column(name = "length", nullable = false)
+    private long length;
+    @OneToMany(targetEntity = Track.class)
     private List<Track> tracks;
-    @ManyToOne(targetEntity = User.class, cascade = CascadeType.ALL)
-    private User user;
+    @ManyToOne(targetEntity = User.class)
+    private User ownerUser;
+    @JsonbProperty
+    @Transient
+    private boolean owner = false;
 
-    public Playlist(String name, int length, List<Track> tracks, User user) {
-        this.name = name;
+    public void setLength(long length) {
         this.length = length;
-        this.tracks = tracks;
-        this.user = user;
     }
 
+    public Playlist(String name, List<Track> tracks, User user) {
+        this.name = name;
+        this.tracks = tracks;
+        this.ownerUser = user;
+    }
 
-    //	public Playlist(int id, String name, int owner, List<Track> tracks) {
-//		this.id = id;
-//		this.name = name;
-//		this.tracks = tracks;
-//	}
-//
-//	public Playlist() {
-//	}
+    public User getOwnerUser() {
+        return ownerUser;
+    }
 
+    public void setOwnerUser(User ownerUser) {
+        this.ownerUser = ownerUser;
+    }
+
+    public boolean setIsOwner() {
+        owner = true;
+        return true;
+    }
+
+    public void setOwner(boolean owner) {
+        this.owner = owner;
+    }
 
     public int getId() {
         return id;
@@ -71,5 +84,9 @@ public class Playlist {
 
     public void addTrack(Track track) {
         this.tracks.add(track);
+    }
+
+    public void removeTrack(Track track) {
+        this.tracks.remove(track);
     }
 }

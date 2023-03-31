@@ -26,9 +26,10 @@ public class UserRepository {
 
     public User addUser(User user) {
         if (userCounter < 1) {
-            entityManager.getTransaction().begin();
-            entityManager.persist(user);
-            entityManager.getTransaction().commit();
+            this.entityManager.getTransaction().begin();
+            this.entityManager.persist(user);
+            this.entityManager.getTransaction().commit();
+            close();
             userCounter += 1;
             return user;
         }
@@ -36,27 +37,21 @@ public class UserRepository {
     }
 
     public User loginUser(String username, String password) throws NotAuthorizedException {
+//        addUser(new User("test", "test", "test", "test", "test", Collections.emptyList()));
         try {
-//            addUser(new User("test", "test", "test", "test", "test", Collections.emptyList()));
-            try {
-                Query query = entityManager.createQuery("SELECT u FROM User u where u.username LIKE '%" + username + "%'");
-                User user = (User) query.getSingleResult();
-                if (user != null && user.getPassword().equals(password)) {
-                    return user;
-                }
-                LOGGER.warning("User not authorized");
-                throw new NotAuthorizedException("User not authorized");
-            } catch (NoResultException e) {
-                LOGGER.warning("User not authorized");
-                throw new NotAuthorizedException("User not authorized");
+            Query query = entityManager.createQuery("SELECT u FROM User u where u.username LIKE '%" + username + "%'");
+            User user = (User) query.getSingleResult();
+            if (user != null && user.getPassword().equals(password)) {
+                return user;
             }
-        } catch (Exception e) {
             LOGGER.warning("User not authorized");
             throw new NotAuthorizedException("User not authorized");
-        } finally {
-
+        } catch (NoResultException e) {
+            LOGGER.warning("User not authorized");
+            throw new NotAuthorizedException("User not authorized");
         }
     }
+
 
     public User getUserByToken(String token) throws UserNotFoundByTokenException {
         Query query = entityManager.createQuery("SELECT u FROM User u where u.token LIKE '%" + token + "%'");
@@ -73,26 +68,26 @@ public class UserRepository {
         User userToUpdate = (User) this.entityManager.find(User.class, user.getId());
         userToUpdate.setToken(token);
         this.entityManager.getTransaction().commit();
+        close();
         return userToUpdate;
     }
 
-    public List<Playlist> getPlaylistsByUser(User user) {
-        try {
-            this.entityManager.getTransaction().begin();
-            List<Playlist> playlists = user.getPlaylists();
-            this.entityManager.getTransaction().commit();
-            this.entityManager.clear();
-            return playlists;
-        } catch (Exception e) {
-            LOGGER.info("Error getting playlists");
-            return null;
-        }
-    }
+//    public List<Playlist> getPlaylistsByUser(User user) {
+//        try {
+//            this.entityManager.getTransaction().begin();
+//            List<Playlist> playlists = user.getPlaylists();
+//            this.entityManager.getTransaction().commit();
+//            this.entityManager.clear();
+//            return playlists;
+//        } catch (Exception e) {
+//            LOGGER.info("Error getting playlists");
+//            return null;
+//        }
+//    }
 
 
     public void close() {
         this.entityManager.close();
-        this.emf.close();
     }
 
 

@@ -7,6 +7,7 @@ import dto.Tracks;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -24,22 +25,51 @@ public class TrackRepository {
         try {
             this.entityManager.getTransaction().begin();
             Playlist playlist = this.entityManager.find(Playlist.class, playlistId);
+            this.entityManager.refresh(playlist);
             Track track = this.entityManager.find(Track.class, trackId);
             playlist.addTrack(track);
+            playlist.setLength(playlist.getLength() + track.getDuration());
             this.entityManager.persist(playlist);
             this.entityManager.getTransaction().commit();
+
+
         } catch (Exception e) {
             LOGGER.info("Error adding track to playlist");
         }
     }
 
+    public void removeTrackFromPlaylist(int playlistId, int trackId) {
+        try {
+            this.entityManager.getTransaction().begin();
+            Playlist playlist = this.entityManager.find(Playlist.class, playlistId);
+            this.entityManager.refresh(playlist);
+            Track track = this.entityManager.find(Track.class, trackId);
+            playlist.removeTrack(track);
+            playlist.setLength(playlist.getLength() - track.getDuration());
+            this.entityManager.persist(playlist);
+            this.entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            LOGGER.info("Error deleting track from playlist");
+        }
+    }
+
     public Tracks getAllTracksNotInPlaylists(int playlistId) {
         try {
-            Playlist playlist = this.entityManager.find(Playlist.class, playlistId);
-            List<Track> tracks = this.entityManager.createQuery("SELECT t FROM Track t WHERE t.id not in (SELECT t.id FROM Track t JOIN t.playlists p WHERE p.id = :playlistId)", Track.class).setParameter("playlistId", playlistId).getResultList();
-            Tracks trackList = new Tracks(tracks);
 
-            return trackList;
+            this.entityManager.getTransaction().begin();
+            List<Track> allTracks = (List<Track>) this.entityManager.createQuery("SELECT t FROM Track t").getResultList();
+            List<Track> allTracksModifiable = new ArrayList<Track>(allTracks);
+
+            Playlist playlist = this.entityManager.find(Playlist.class, playlistId);
+            this.entityManager.refresh(playlist);
+            List<Track> tracksInPlaylist = playlist.getTracks();
+
+            allTracksModifiable.removeAll(tracksInPlaylist);
+
+            this.entityManager.getTransaction().commit();
+
+
+            return new Tracks(allTracksModifiable);
         } catch (Exception e) {
             LOGGER.info("Error getting tracks not in playlist");
             return null;
@@ -56,5 +86,12 @@ public class TrackRepository {
             LOGGER.info("Error getting tracks in playlist");
             return null;
         }
+
     }
+
+    public void close() {
+        this.entityManager.close();
+    }
+
+
 }
